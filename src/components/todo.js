@@ -69,11 +69,6 @@ class TodoList extends Component {
           </li>
         ))}
       </ul>
-
-
-
-
-
     );
   }
 }

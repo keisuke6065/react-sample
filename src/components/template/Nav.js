@@ -11,6 +11,9 @@ class componentName extends Component {
                     <li>
                         <Link to="/todo" onClick={this.onClick} className="">todo</Link>
                     </li>
+                    <li>
+                        <Link to="/game" onClick={this.onClick} className="">gema</Link>
+                    </li>
                 </ul>
             </div>
         );

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {IndexRoute, Router, Route, browserHistory} from 'react-router';
 import App from 'App';
 import Todo from 'components/todo'
+import Game from 'components/2048/2048'
 import 'index.css';
 
 
@@ -17,6 +18,7 @@ ReactDOM.render((
     <Route path="/" component={App}>
       <IndexRoute component={Index}/>
       <Route path="/todo" component={Todo} />
+      <Route path="/game" component={Game} />
     </Route>
   </Router>
 ),

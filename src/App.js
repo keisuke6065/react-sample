@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import {Link} from 'react-router';
-import Nav from 'components/template/Nav.js';
+//import Nav from 'components/template/Nav.js';
 
 
 class App extends Component {
@@ -36,7 +36,9 @@ class App extends Component {
             <div className="mdl-layout__drawer">
               <span className="mdl-layout-title">Title</span>
               <nav className="mdl-navigation">
+                <Link to="/" className="mdl-navigation__link">home</Link>
                 <Link to="/todo" className="mdl-navigation__link">todo</Link>
+                <Link to="/game" className="mdl-navigation__link">game</Link>
                 <a className="mdl-navigation__link" href="">Link</a>
                 <a className="mdl-navigation__link" href="">Link</a>
               </nav>
