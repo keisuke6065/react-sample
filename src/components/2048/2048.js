@@ -4,7 +4,7 @@ class game extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            board:[[2,2,2,2],
+            board:[[2,0,2,2],
             [0,0,0,0],
             [0,0,0,0],
             [0,0,0,0]]
@@ -15,7 +15,7 @@ class game extends Component {
 
     keyHandler(e){
         console.log(e.keyCode)
-        var xCount = 0
+        //var xCount = 0
         var newBoard = this.state.board
         var random = Math.floor(Math.random() * 2, 0) ? 2 : 4
         var frist = Math.floor(Math.random()*4)
@@ -24,47 +24,69 @@ class game extends Component {
             newBoard[frist][second] = random
         }
         console.log('random' + random + frist + second)
-        // 普通のforに書き換える
-        this.state.board.forEach(function(x) {
-            console.log(x)
-            var yCount = 0
-            x.forEach(function(y) {
-                // left
-                if(e.keyCode === 37){
-                    console.log('left')
-                    if(newBoard[xCount][yCount+1] === y
-                        && y !== 0)
-                        newBoard[xCount][yCount] = y*2
-                        console.log('test' + x + 'test' )
-                    if(newBoard[xCount][yCount-1] === y*2
-                        && y !== 0){
-                        newBoard[xCount][yCount] = 0
-                    }
-                }
-                // right
-                // down
-                // up
-                yCount++
-            }, this);
-            //left
-            if(e.keyCode === 37){
-                newBoard[xCount].sort(function(a,b){
-                    if( a > b ) return -1;
-                    if( a < b  && a === 0) return 1;
-                    return 0;
-                })
-                console.log('sort' + newBoard[xCount])
+        
+        // 変換方法
+        const keyCodeMap = {
+            37 : ([true,true]),//left
+            38 : ([true,false]),// up
+            39 : ([false,false]),//right
+            40 : ([false,true])// down
+        }
+        var conversion = keyCodeMap[e.keyCode]
+        console.log(conversion[0])
+        
+        if(e.keyCode === 37 || e.keyCode === 40){
+            if(e.keyCode === 40){
+                newBoard.reverse()
             }
-            xCount++
-        }, this);
+            for(var x = 0;x < newBoard.length;x++){
+                for(var y = 0;y < newBoard[x].length;y++){
+                        var z = 0
+                        if(newBoard[x][y+1] === newBoard[x][y] && newBoard[x][y] !== 0){
+                            z = newBoard[x][y]
+                            newBoard[x][y] = z*2
+                        }
+                        if(newBoard[x][y-1] === newBoard[x][y]*2 && newBoard[x][y] !== 0){
+                            newBoard[x][y] = z
+                        }
+                    
+                   console.log(newBoard[x][y])
+                }
+                //left
+                if(e.keyCode === 37){
+                    newBoard[x].sort(function(a,b){
+                        if( a > b ) return -1;
+                        if( a < b  && a === 0) return 1;
+                        return 0;
+                    })
+                    console.log('sort' + newBoard[x])
+                }
+                //down
+                if(e.keyCode === 40){
+                    newBoard[x].sort(function(a,b){
+                        if( a > b ) return -1;
+                        if( a < b  && a === 0) return 1;
+                        return 0;
+                    })
+                    console.log('sort' + newBoard[x])
+                }
+            }
+        }
+        if(e.keyCode === 40){
+            newBoard.reverse()
+        }
+        console.log(newBoard)
+
+        // // 配列転置
+        // var testArray = newBoard.map((a,x) => a.map((b,y)=>newBoard[y][x]))
+        // console.log(testArray[0][0] + '転置' + testArray[1][0])
+        // // 上下反転
+        // console.log(newBoard.reverse() + '上下反対')
         this.setState({
             board:newBoard
         })
     }
 
-    // handlechange(e){
-    //     console.log('test')
-    // }
     componentDidMount(){
         window.addEventListener("keydown", this.keyHandler, false)
     }
@@ -81,6 +103,7 @@ class game extends Component {
                     ))}
                     </ul>
                 ))}
+                <p>{this.state.board}</p>
             </div>
         );
     }
