@@ -33,24 +33,25 @@ class game extends Component {
             40 : ([false,true])// down
         }
         var conversion = keyCodeMap[e.keyCode]
-        console.log(conversion[0])
+        // console.log(conversion[0])
         
         if(e.keyCode === 37 || e.keyCode === 40){
-            if(e.keyCode === 40){
-                newBoard.reverse()
-            }
+            // if(e.keyCode === 40){
+            //     newBoard.reverse()
+            // }
             for(var x = 0;x < newBoard.length;x++){
                 for(var y = 0;y < newBoard[x].length;y++){
-                        var z = 0
+                        var z = null
                         if(newBoard[x][y+1] === newBoard[x][y] && newBoard[x][y] !== 0){
+                            console.log(y + 'y値')
                             z = newBoard[x][y]
                             newBoard[x][y] = z*2
+                            console.log(z + 'z値 変換後')
                         }
                         if(newBoard[x][y-1] === newBoard[x][y]*2 && newBoard[x][y] !== 0){
-                            newBoard[x][y] = z
+                            newBoard[x][y] = 0
+                            console.log(z + 'z値　初期化')
                         }
-                    
-                   console.log(newBoard[x][y])
                 }
                 //left
                 if(e.keyCode === 37){
@@ -59,31 +60,33 @@ class game extends Component {
                         if( a < b  && a === 0) return 1;
                         return 0;
                     })
-                    console.log('sort' + newBoard[x])
+                    //console.log('sort' + newBoard[x])
                 }
+                   console.log(newBoard[x])
                 //down
-                if(e.keyCode === 40){
-                    newBoard[x].sort(function(a,b){
-                        if( a > b ) return -1;
-                        if( a < b  && a === 0) return 1;
-                        return 0;
-                    })
-                    console.log('sort' + newBoard[x])
-                }
+                // if(e.keyCode === 40){
+                //     newBoard[x].sort(function(a,b){
+                //         if( a > b ) return -1;
+                //         if( a < b  && a === 0) return 1;
+                //         return 0;
+                //     })
+                //     console.log('sort' + newBoard[x])
+                // }
             }
         }
-        if(e.keyCode === 40){
-            newBoard.reverse()
-        }
-        console.log(newBoard)
+        // if(e.keyCode === 40){
+        //     newBoard.reverse()
+        // }
+        // console.log(newBoard)
 
         // // 配列転置
         // var testArray = newBoard.map((a,x) => a.map((b,y)=>newBoard[y][x]))
         // console.log(testArray[0][0] + '転置' + testArray[1][0])
         // // 上下反転
         // console.log(newBoard.reverse() + '上下反対')
+        // console.log(this.state.board)
         this.setState({
-            board:newBoard
+            board:this.state.board
         })
     }
 
@@ -97,13 +100,12 @@ class game extends Component {
         return (
             <div>
                 {this.state.board.map(x =>(
-                    <ul key={count++} className={count}>
+                    <table key={count++} className={count}>
                     {x.map(y =>(
-                        <li key={count + '' + yCount++}>{y}</li>   
+                        <th key={count + '' + yCount++}>{y}</th>
                     ))}
-                    </ul>
+                    </table>
                 ))}
-                <p>{this.state.board}</p>
             </div>
         );
     }
